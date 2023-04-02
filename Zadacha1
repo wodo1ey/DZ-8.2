@@ -1,0 +1,38 @@
+# Создать оконное приложение для вычисления площади и периметра 
+# треугольника по трем сторонам. Стороны должны вводиться с помощью 
+# текстовых полей. Для вычисления используется кнопка «Вычислить». 
+# Предусмотреть выдачу сообщений об ошибке, если треугольник не существует.
+
+import tkinter as tk
+import math
+
+def area():
+    result.delete(0,100)
+    a = int(first.get())
+    b = int(second.get())
+    c = int(third.get())
+    if a * b < c or a * c < b or b * c < a:
+        result.insert(0, 'Данный треугольник не существует')
+    else:
+        p = (a + b + c) / 2
+        S = math.sqrt(p * (p - a) * (p - b) * (p - c))
+        result.insert(0, f'Результат: {S}')
+
+
+root = tk.Tk()
+root.title('Площадь треугольника по трём сторонам')
+root.geometry('400x300')
+tk.Label(root, text='Первая сторона').grid(row=0, column=0)
+first = tk.Entry(root)
+first.grid(row=0, column=1)
+tk.Label(root, text='Вторая сторона').grid(row=1, column=0)
+second = tk.Entry(root)
+second.grid(row=1, column=1)
+tk.Label(root, text='Третья сторона').grid(row=2, column=0)
+third = tk.Entry(root)
+third.grid(row=2, column=1)
+tk.Button(root, text='Вычислить', command=area).grid(row=3, column=0, columnspan=2, stick='we')
+result = tk.Entry(root)
+result.grid(row=4, column=0, columnspan=2, stick='we')
+
+root.mainloop()
