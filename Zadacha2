@@ -1,0 +1,64 @@
+# Создать два списка для тестирующей программы. В первом списке будут 
+# храниться 10 вопросов по географии, во втором – правильные ответы. Написать 
+# оконное приложение, которое случайным образом выбирает из первого списка 5 
+# вопросов (следить, чтобы они не повторялись!) и предлагает ввести ответы. Затем 
+# подсчитывается количество верных ответов и выводится в окне в виде метки. 
+
+import tkinter as tk
+import random
+
+questions = ['Столица Венгрии?', 'Самое солёное море в мире?', 'Самая большая страна в мире?', 'Сколько океанов на Змеле?', 'Воздушная оболочка Земли - это?',
+             'Крупнейший действующий вулкан на Земле?', 'Сколько частей света на Земле?', 'Столица Новой Зеландии?', 'Самая старая гора на планете?', 'Столица Испании?']
+answers = ['Будапешт', 'Красное', 'Россия', '5', 'Атмосфера', 'Мауна-Лоа', '6', 'Веллингтон', 'Карандаш', 'Мадрид']
+s = [0, 0, 0, 0, 0]
+
+
+def check():
+    result.delete(0, 1000)
+    r = 0
+    if a1.get() == answers[s[0]]:
+        r += 1
+    if a2.get() == answers[s[1]]:
+        r += 1
+    if a3.get() == answers[s[2]]:
+        r += 1
+    if a4.get() == answers[s[3]]:
+        r += 1
+    if a5.get() == answers[s[4]]:
+        r += 1
+    if r == 1:
+        result.insert(0, 'Результат: 1 балл')
+    elif r == 2 or r== 3 or r == 4:
+        result.insert(0, f'Результат: {r} балла')
+    else:
+        result.insert(0, f'Результат: {r} баллов')
+
+
+
+root = tk.Tk()
+root.title('Тест по географии')
+root.geometry('400x300')
+for i in range(5):
+    n = random.randint(0, 9)
+    while n in s:
+        n = random.randint(0, 9)
+    s[i] = n
+    tk.Label(root, text=questions[n]).grid(row=i, column=0)
+
+a1 = tk.Entry(root)
+a1.grid(row=0, column=1)
+a2 = tk.Entry(root)
+a2.grid(row=1, column=1)
+a3 = tk.Entry(root)
+a3.grid(row=2, column=1)
+a4 = tk.Entry(root)
+a4.grid(row=3, column=1)
+a5 = tk.Entry(root)
+a5.grid(row=4, column=1)
+
+tk.Button(root, text='Проверить', command=check).grid(row=5, column=0, columnspan=2, stick='we')
+tk.Label(root, text='Результат:').grid(row=6, column=0)
+result = tk.Entry(root)
+result.grid(row=6, column=1)
+
+root.mainloop()
